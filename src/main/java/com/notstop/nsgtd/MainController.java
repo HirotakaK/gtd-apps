@@ -11,8 +11,6 @@ import javax.servlet.ServletException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.appengine.api.rdbms.AppEngineDriver;
-
 @RestController
 public class MainController {
 
@@ -25,7 +23,7 @@ public class MainController {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-        return "Helo worl_01d!!";
+        return "Helo worl_02d!!";
     }
 
     private void testsql() throws ServletException {
