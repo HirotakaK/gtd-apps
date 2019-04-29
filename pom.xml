@@ -57,6 +57,14 @@
 		    <artifactId>appengine-api-1.0-sdk</artifactId>
 		    <version>1.9.73</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>8.0.15</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -32,14 +32,15 @@ public class MainController {
     	// mygcpproject-146511:us-west1:dev-mysql57
     	// value="jdbc:google:mysql://${INSTANCE_CONNECTION_NAME}/${database}?user=${user}&amp;password=${password}" />
 //    	String DB_URL = "jdbc:google:rdbms://mygcpproject-146511:us-west1:dev-mysql57/test1";
-    	String DB_URL = "jdbc:google:mysql://mygcpproject-146511:us-west1:dev-mysql57/test1";
-    	String user = "root";
-    	String password = "nNIkiGD9hqjLEJPo";
+    	String DB_URL = "jdbc:mysql://localhost:56492/TEST?characterEncoding=UTF-8&serverTimezone=JST";
+    	String user = "adminUser";
+    	String password = "Tomyan_76";
     	String INSERT_SQL = "INSERT INTO user (name) VALUES(?)";
     	Connection c = null;
 
     	try {
-    	      DriverManager.registerDriver(new AppEngineDriver());
+    		Class.forName( "com.mysql.jdbc.Driver" ).newInstance();
+//    		DriverManager.registerDriver(new AppEngineDriver());
     	      c = DriverManager.getConnection(DB_URL, user, password);
 //    	      c = DriverManager.getConnection(DB_URL);
 //    	      String name = req.getParameter("name");
@@ -58,7 +59,7 @@ public class MainController {
 //    	          out.println("<html><head></head><body>Failure! Please try again! Redirecting in 3 seconds...</body></html>");
     	        }
     	      }
-    	    } catch (SQLException e) {
+    	    } catch (SQLException | InstantiationException | IllegalAccessException | ClassNotFoundException e) {
     	      e.printStackTrace();
     	    } finally {
     	      if (c != null)
