@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>[firebase] my-sample-project</title>
+
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-auth.js"></script>
+
+<script
+    src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
+<link type="text/css" rel="stylesheet"
+    href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" />
+
+<script>
+    // Firebaseの初期化
+    var config = {
+        apiKey: "AIzaSyCLbKtqW74zI0QNHbteqzIRPfxWsVwBxfs",
+        authDomain: "mygcpproject-146511.firebaseapp.com",
+        databaseURL: "https://mygcpproject-146511.firebaseio.com",
+        projectId: "mygcpproject-146511",
+        storageBucket: "mygcpproject-146511.appspot.com",
+        messagingSenderId: "768267993900"
+    };
+    firebase.initializeApp(config);
+
+    // FirebaseUIインスタンス初期化
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+    // FirebaseUIの各種設定
+    var uiConfig = {
+      callbacks: {
+        signInSuccess: function(currentUser, credential, redirectUrl) {
+          // サインイン成功時のコールバック関数
+          // 戻り値で自動的にリダイレクトするかどうかを指定
+          return true;
+        },
+        uiShown: function() {
+          // FirebaseUIウィジェット描画完了時のコールバック関数
+          // 読込中で表示しているローダー要素を消す
+          document.getElementById('loader').style.display = 'none';
+        }
+      },
+      // リダイレクトではなく、ポップアップでサインインフローを表示
+      signInFlow: 'popup',
+      signInSuccessUrl: 'index.html',
+      signInOptions: [
+        // サポートするプロバイダ(メールアドレス)を指定
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID
+      ],
+      // Terms of service url.(サービス利用規約ページの)
+      tosUrl: '<your-tos-url>'
+    };
+
+    // FirebaseUI描画開始
+    ui.start('#firebaseui-auth-container', uiConfig);
+  </script>
+</head>
+<body>
+    <div id="firebaseui-auth-container"></div>
+    <div id="loader">Loading...</div>
+</body>
+</html>
