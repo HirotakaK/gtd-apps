@@ -10,7 +10,7 @@
 	<public-root>/static</public-root>
 	<!--静的ファイルの対象 -->
 	<static-files>
-		<include path="static/**.html">
+		<include path="static/**">
 		</include>
 	</static-files>
 
