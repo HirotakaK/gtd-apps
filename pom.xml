@@ -67,6 +67,11 @@
 			<version>2.0.1</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>6.8.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -100,7 +105,7 @@
 			</properties>
 		</profile>
 		<profile>
-			<!-- GoogleAppEngine 開発・検証環境-->
+			<!-- GoogleAppEngine 開発・検証環境 -->
 			<id>cloud</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
