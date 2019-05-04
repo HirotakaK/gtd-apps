@@ -9,31 +9,26 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.appengine.api.utils.SystemProperty;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
+import com.notstop.nsgtd.services.CommonService;
+import com.notstop.nsgtd.services.Settings;
 
 @RestController
 public class MainController {
 
     @RequestMapping(value="/test3")
     private String hello() {
+    	Settings settings = new Settings();
+
     	System.out.println("\r\n\\r\\n\\r\\n hello, world \\r\\n\\\\r\\\\n\\\\r\\\\n");
     	System.out.println("\r\n\\r\\n\\r\\n hello, world \\r\\n\\\\r\\\\n\\\\r\\\\n");
     	System.out.println("\r\n\\r\\n\\r\\n hello, world \\r\\n\\\\r\\\\n\\\\r\\\\n");
     	System.out.println("\r\n\\r\\n\\r\\n hello, world \\r\\n\\\\r\\\\n\\\\r\\\\n");
-    	if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
-    		   // Production
-    			System.out.println("\r\n\\r\\n\\r\\n aaaaaaaaaaa, world \\r\\n\\\\r\\\\n\\\\r\\\\n");
-    		 } else {
-    		  // Local development server
-    		  // which is: SystemProperty.Environment.Value.Development
-    			 System.out.println("\r\n\\r\\n\\r\\n bbbbbbbbbbbbb, world \\r\\n\\\\r\\\\n\\\\r\\\\n");
-    		}
-        return "Helo worl_02d!!";
+        return "test03!!";
     }
 
     @RequestMapping(value="/test2")
@@ -41,41 +36,29 @@ public class MainController {
     	System.out.println("\r\n\\r\\n\\r\\n hello, world2 \\r\\n\\\\r\\\\n\\\\r\\\\n");
     	System.out.println("a:" + a);
     	System.out.println("b:" + b);
+    	CommonService commonService = new CommonService();
 
 		try {
 			String token2 = getToken(request);
 	      	FileInputStream serviceAccount;
-			if(isAppEngine()) {
-				System.out.println("d1");
+			if(commonService.isAppEngine()) {
 				serviceAccount = new FileInputStream("./WEB-INF/server-resources/mygcpproject-146511-firebase-adminsdk-bjwq1-cdf5f808b8.json");
-				System.out.println("d1.1");
 			}else {
-				System.out.println("d2");
 				serviceAccount = new FileInputStream("./src/main/webapp/WEB-INF/server-resources/mygcpproject-146511-firebase-adminsdk-bjwq1-cdf5f808b8.json");
-				System.out.println("d2.1");
 			}
-			System.out.println("c3");
 			FirebaseOptions options = new FirebaseOptions.Builder()
 	    			  .setCredentials(GoogleCredentials.fromStream(serviceAccount))
 	    			  .setDatabaseUrl("https://mygcpproject-146511.firebaseio.com")
 	    			  .setProjectId("mygcpproject-146511")
 	    			  .build();
-			System.out.println("c4");
-			System.out.println("FirebaseApp.getApps():"+FirebaseApp.getApps());
-			System.out.println("FirebaseApp.getApps()'s Size:"+FirebaseApp.getApps().size());
 			if (FirebaseApp.getApps().isEmpty()) {
-				System.out.println("c4.11");
 				FirebaseApp.initializeApp(options);
-				System.out.println("c4.12");
 			}
 
 			FirebaseToken decodedToken = null;
-			System.out.println("c5.01");
-			System.out.println("c5.002"+FirebaseAuth.getInstance());
 			decodedToken = FirebaseAuth.getInstance().verifyIdToken(token2);
-			System.out.println("c5.03");
 			String uid = decodedToken.getUid();
-			System.out.println("uid:"+uid);
+			System.out.println("uid:" + uid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,22 +74,6 @@ public class MainController {
     	}
     	return token.substring("Bearer ".length());
     }
-
-    // 暫定
-	private boolean isAppEngine() {
-		System.out.println("e0");
-		if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
- 		   // AppEngine
-			System.out.println("e1");
-			return true;
- 		 } else {
- 		  // Local
- 			System.out.println("e2");
- 			return false;
- 		}
-	}
-
-
 
 
     // MyBatis
