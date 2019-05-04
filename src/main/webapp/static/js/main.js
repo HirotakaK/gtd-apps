@@ -3,8 +3,8 @@ firebase.auth().onAuthStateChanged( (user) => {
 	let info = document.querySelector('#info');
 
 	if(user) {
-		h1.innerText   = 'Login Complete!';
-		info.innerHTML = `${user.displayName}さんがログインしました`;
+//		h1.innerText   = 'Login Complete!';
+//		info.innerHTML = `${user.displayName}さんがログインしました`;
 		console.log(user);
 		console.table(user);
 	}
@@ -35,18 +35,24 @@ firebase.auth().onAuthStateChanged( (user) => {
 			$("#textStatus").html("textStatus : " + textStatus);
 			$("#errorThrown").html("errorThrown : " + errorThrown);
 		})
-		/*
-                     .fail((data) => {
-            //失敗した場合の処理
-            console.log(data.responseText);  //レスポンス文字列を表示
-          })
-		 */
 		.always((data) => {
 			//成功・失敗どちらでも行う処理
 			console.log(data);
 		});
-
 	}).catch(function(error) {
 		// Handle error
 	});
+});
+
+/**
+ * ログアウトボタン処理
+ * ログアウトAPIを呼び出します
+ * */
+$('#LogoutButtton').off().on('click', function() {
+	firebase.auth().signOut().then(()=>{
+        console.log("ログアウトしました");
+      })
+      .catch( (error)=>{
+        console.log(`ログアウト時にエラーが発生しました (${error})`);
+      });
 });
