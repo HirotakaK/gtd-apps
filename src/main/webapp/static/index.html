@@ -2,79 +2,15 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Hello Firebase Auth</title>
+  <title>NSGTD</title>
   <script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.8.1/firebase-app.js"></script>
   <script type="text/javascript" src="https://www.gstatic.com/firebasejs/5.8.1/firebase-auth.js"></script>
+  <script type="text/javascript" src="./otherjs/jquery-3.4.0.min.js"></script>
   <script type="text/javascript" src="./js/config.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="./js/initializer.js"></script>
 </head>
 <body>
   <h1>...Please wait</h1>
   <div id="info"></div>
-  <script>
-    firebase.auth().onAuthStateChanged( (user) => {
-      let h1   = document.querySelector('h1');
-      let info = document.querySelector('#info');
-
-      if(user) {
-        h1.innerText   = 'Login Complete!';
-        info.innerHTML = `${user.displayName}さんがログインしました`;
-        console.log(user);
-        console.table(user);
-      }
-      else {
-        h1.innerText = 'Not Login';
-      }
-      var token = "";
-      console.table(firebase.auth().currentUser);
-//      const token = firebase.auth().currentUser.getIdToken(true);
-      firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-            // Send token to your backend via HTTPS
-            // ...
-            console.log('idToken:'+idToken);
-    	  token = idToken;
-          console.log('token:'+token);
-          console.dir('token:'+token);
-          console.table('token:'+token);
-
-          //Ajaxに渡すデータ
-          //var dt = {a:1, b:2, token:token.toString()};  //このサンプルでは関係ありません。
-          var dt = {a:1, b:2};  //このサンプルでは関係ありません。
-
-          //Ajax通信を行う
-          $.ajax({
-              url:"test2",
-              type:"GET",
-              headers:{
-                  Authorization: 'Bearer '+idToken
-              },
-              dataType:"json",
-              data:dt
-          })
-          .done((data) => {
-            //成功した場合の処理
-            console.log(data);
-          })
-          .fail(function(jqXHR, textStatus, errorThrown) {
-                          $("#XMLHttpRequest").html("XMLHttpRequest : " + jqXHR.status);
-                          $("#textStatus").html("textStatus : " + textStatus);
-                          $("#errorThrown").html("errorThrown : " + errorThrown);
-                     })
-    /*
-                     .fail((data) => {
-            //失敗した場合の処理
-            console.log(data.responseText);  //レスポンス文字列を表示
-          })
-          */
-          .always((data) => {
-            //成功・失敗どちらでも行う処理
-            console.log(data);
-          });
-
-      }).catch(function(error) {
-            // Handle error
-      });
-    });
-  </script>
 </body>
 </html>
