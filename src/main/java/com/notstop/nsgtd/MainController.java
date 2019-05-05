@@ -13,9 +13,11 @@ import com.notstop.nsgtd.services.CommonService;
 @RestController
 public class MainController {
 
-	// MyBatis
 	@Autowired
 	BusinessService businessService;
+
+	@Autowired
+	CommonService commonService;
 
     @RequestMapping(value="/test3")
     private String hello() {
@@ -32,8 +34,6 @@ public class MainController {
      * */
     @RequestMapping(value="/get-tasks")
     private String getTasks(HttpServletRequest request) {
-    	CommonService commonService = new CommonService();
-
     	// リクエストヘッダよりuidを取得する
     	String uid = commonService.getUserIdFromToken(request);
     	// uidよりタスクを取得する
