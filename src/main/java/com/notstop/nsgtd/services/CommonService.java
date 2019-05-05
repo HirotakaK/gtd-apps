@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.appengine.api.utils.SystemProperty;
@@ -18,6 +19,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 @Service
 public class CommonService{
+
+	@Autowired
+	private Settings settings;
 
 	/**
 	 * AppEngine環境か区別する
@@ -41,11 +45,7 @@ public class CommonService{
     	try {
     		// ヘッダよりuidを取得する
     		FileInputStream serviceAccount;
-    		if(isAppEngine()) {
-    			serviceAccount = new FileInputStream("./WEB-INF/server-resources/mygcpproject-146511-firebase-adminsdk-bjwq1-cdf5f808b8.json");
-    		}else {
-    			serviceAccount = new FileInputStream("./src/main/webapp/WEB-INF/server-resources/mygcpproject-146511-firebase-adminsdk-bjwq1-cdf5f808b8.json");
-    		}
+    		serviceAccount = new FileInputStream(settings.getFirebaseFilePath());
     		FirebaseOptions options = new FirebaseOptions.Builder()
     				.setCredentials(GoogleCredentials.fromStream(serviceAccount))
     				.setDatabaseUrl("https://mygcpproject-146511.firebaseio.com")
@@ -73,6 +73,4 @@ public class CommonService{
     	}
     	return token.substring("Bearer ".length());
     }
-
-
 }
