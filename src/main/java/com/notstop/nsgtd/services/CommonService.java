@@ -1,10 +1,20 @@
 package com.notstop.nsgtd.services;
 
+import java.io.FileInputStream;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
 import com.google.appengine.api.utils.SystemProperty;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
+
+/**
+ * 共通処理をまとめたファイルです
+ * */
 
 @Service
 public class CommonService{
@@ -21,6 +31,34 @@ public class CommonService{
  		  // Local
  			return false;
  		}
+	}
+
+	/**
+	 * リクエストヘッダよりトークンを取得し、ユーザーIDを取得する
+	 * @method getUserIdFromToken
+	 * */
+	public String getUserIdFromToken(HttpServletRequest request) {
+    	try {
+    		// ヘッダよりuidを取得する
+    		FileInputStream serviceAccount;
+    		if(isAppEngine()) {
+    			serviceAccount = new FileInputStream("./WEB-INF/server-resources/mygcpproject-146511-firebase-adminsdk-bjwq1-cdf5f808b8.json");
+    		}else {
+    			serviceAccount = new FileInputStream("./src/main/webapp/WEB-INF/server-resources/mygcpproject-146511-firebase-adminsdk-bjwq1-cdf5f808b8.json");
+    		}
+    		FirebaseOptions options = new FirebaseOptions.Builder()
+    				.setCredentials(GoogleCredentials.fromStream(serviceAccount))
+    				.setDatabaseUrl("https://mygcpproject-146511.firebaseio.com")
+    				.setProjectId("mygcpproject-146511")
+    				.build();
+    		if (FirebaseApp.getApps().isEmpty()) {
+    			FirebaseApp.initializeApp(options);
+    		}
+    		return FirebaseAuth.getInstance().verifyIdToken(getToken(request)).getUid();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+		return null;
 	}
 
 	/**
