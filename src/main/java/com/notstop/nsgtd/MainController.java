@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,8 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.notstop.nsgtd.mapper.DbMapper;
+import com.notstop.nsgtd.mapper.TestMapper;
 import com.notstop.nsgtd.services.CommonService;
 
 @RestController
@@ -22,6 +25,12 @@ public class MainController {
     private String hello() {
     	System.out.println("\r\n\\r\\n\\r\\n hello, world \\r\\n\\\\r\\\\n\\\\r\\\\n");
     	System.out.println("\r\n\\r\\n\\r\\n hello, world \\r\\n\\\\r\\\\n\\\\r\\\\n");
+    	try {
+			run2();
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
     	System.out.println("\r\n\\r\\n\\r\\n hello, world \\r\\n\\\\r\\\\n\\\\r\\\\n");
     	System.out.println("\r\n\\r\\n\\r\\n hello, world \\r\\n\\\\r\\\\n\\\\r\\\\n");
         return "test03!!";
@@ -59,11 +68,18 @@ public class MainController {
     }
 
     // MyBatis
-//    private final TestMapper testMapper;
+    @Autowired
+    private DbMapper dbMapper;
 
-//    public MainController(TestMapper testMapper) {
-//        this.testMapper = testMapper; // Mapperをインジェクションする
+    @Autowired
+    private TestMapper testMapper;
+
+    //    private final DbMapper dbMapper;
+//    public MainController(DbMapper dbMapper) {
+//        this.dbMapper = dbMapper; // Mapperをインジェクションする
 //    }
+
+
 
     @Transactional
     public void run2() throws Exception {
@@ -72,7 +88,8 @@ public class MainController {
 //        newTodo.setTitle("飲み会");
 //        newTodo.setDetails("銀座 19:00");
 //
-//    	testMapper.insert(); // 新しいTodoをインサートする
+    	dbMapper.insert2("d1"); // 新しいTodoをインサートする
+    	testMapper.insert();
 //
 //        Todo loadedTodo = todoMapper.select(newTodo.getId()); // インサートしたTodoを取得して標準出力する
 //        System.out.println("ID       : " + loadedTodo.getId());
