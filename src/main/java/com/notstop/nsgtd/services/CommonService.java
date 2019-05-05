@@ -1,5 +1,7 @@
 package com.notstop.nsgtd.services;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Service;
 
 import com.google.appengine.api.utils.SystemProperty;
@@ -8,18 +10,31 @@ import com.google.appengine.api.utils.SystemProperty;
 public class CommonService{
 
 	/**
-	 * AppEngine環境か区別する(true AppEngine環境,false 非AppEngine環境)
-
+	 * AppEngine環境か区別する
+	 * @return {boolean} (true AppEngine環境,false 非AppEngine環境)
 	 * */
 	public boolean isAppEngine() {
 		if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
  		   // AppEngine
-			System.out.println("e1");
 			return true;
  		 } else {
  		  // Local
- 			System.out.println("e2");
  			return false;
  		}
 	}
+
+	/**
+	 * リクエストヘッダのAuthorizationよりトークンを返します。
+	 * @param request リクエストヘッダ
+	 * @return {String} トークン
+	 * */
+	public String getToken(HttpServletRequest request) {
+    	String token = request.getHeader("Authorization");
+    	if (token == null || !token.startsWith("Bearer ")) {
+    		return null;
+    	}
+    	return token.substring("Bearer ".length());
+    }
+
+
 }

@@ -1,48 +1,51 @@
+/**
+ * firebaseの初期認証
+ * 認証NGの場合はログイン画面に遷移する
+ * ここを非同期処理化した方が良い
+ * */
 firebase.auth().onAuthStateChanged( (user) => {
-	let h1   = document.querySelector('h1');
-	let info = document.querySelector('#info');
-
-	if(user) {
-//		h1.innerText   = 'Login Complete!';
-//		info.innerHTML = `${user.displayName}さんがログインしました`;
-		console.log(user);
-		console.table(user);
-	}
-	else {
+	if(!user) {
 		// firebase未ログインの場合
 		window.location.href = 'login.html';
 	}
-	firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-		//Ajaxに渡すデータ
-		var dt = {a:1, b:2};  //このサンプルでは関係ありません。
+	else {
+		console.log(user);
+		console.table(user);
+		// 自分のuidのタスク取得
+		firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(getTasks);
+	}
+})
 
-		//Ajax通信を行う
-		$.ajax({
-			url:"test2",
-			type:"GET",
-			headers:{
-				Authorization: 'Bearer '+idToken
-			},
-			dataType:"json",
-			data:dt
-		})
-		.done((data) => {
-			//成功した場合の処理
-			console.log(data);
-		})
-		.fail(function(jqXHR, textStatus, errorThrown) {
-			$("#XMLHttpRequest").html("XMLHttpRequest : " + jqXHR.status);
-			$("#textStatus").html("textStatus : " + textStatus);
-			$("#errorThrown").html("errorThrown : " + errorThrown);
-		})
-		.always((data) => {
-			//成功・失敗どちらでも行う処理
-			console.log(data);
-		});
-	}).catch(function(error) {
-		// Handle error
+/**
+ * サーバーサイドでget-taskasのAPIを実行し、
+ * タスク一覧とユーザー情報を取得する
+ * @method getTasks
+ * */
+var getTasks = function(idToken) {
+	console.log('a1');
+	//Ajax通信を行う
+	$.ajax({
+		url:"get-tasks",
+		type:"POST",
+		headers:{
+			Authorization: 'Bearer '+idToken
+		},
+		dataType:"json"
+	})
+	.done((data) => {
+		//成功した場合の処理
+		console.log(data);
+	})
+	.fail(function(jqXHR, textStatus, errorThrown) {
+		$("#XMLHttpRequest").html("XMLHttpRequest : " + jqXHR.status);
+		$("#textStatus").html("textStatus : " + textStatus);
+		$("#errorThrown").html("errorThrown : " + errorThrown);
+	})
+	.always((data) => {
+		//成功・失敗どちらでも行う処理
+		console.log(data);
 	});
-});
+};
 
 /**
  * ログアウトボタン処理
