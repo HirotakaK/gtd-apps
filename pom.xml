@@ -105,7 +105,7 @@
 				<!-- 自動テストは無視 -->
 				<maven.test.skip>true</maven.test.skip>
 				<!-- Firebase認証ファイルの相対パス -->
-				<values.firebasefilepath>./src/main/webapp/WEB-INF/server-resources/mygcpproject-146511-firebase-adminsdk-bjwq1-cdf5f808b8.json</values.firebasefilepath>
+				<values.firebasefilepath>./src/main/webapp/WEB-INF/server-resources/firebase-adminsdk.json</values.firebasefilepath>
 				<!-- DB設定 -->
 				<spring.datasource.driver-class-name>com.mysql.jdbc.Driver</spring.datasource.driver-class-name>
 				<spring.datasource.url>jdbc:mysql://localhost:56492/TEST?characterEncoding=UTF-8&amp;serverTimezone=JST</spring.datasource.url>
@@ -123,7 +123,7 @@
 				<!-- 自動テストは無視 -->
 				<maven.test.skip>true</maven.test.skip>
 				<!-- Firebase認証ファイルの相対パス -->
-				<values.firebasefilepath>./WEB-INF/server-resources/mygcpproject-146511-firebase-adminsdk-bjwq1-cdf5f808b8.json</values.firebasefilepath>
+				<values.firebasefilepath>./WEB-INF/server-resources/firebase-adminsdk.json</values.firebasefilepath>
 				<!-- DB設定 -->
 				<spring.datasource.driver-class-name>com.mysql.jdbc.GoogleDriver</spring.datasource.driver-class-name>
 				<spring.datasource.url>jdbc:google:mysql://mygcpproject-146511:us-west1:dev-mysql57/test1</spring.datasource.url>
