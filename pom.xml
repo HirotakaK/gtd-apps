@@ -108,9 +108,9 @@
 				<values.firebasefilepath>./src/main/webapp/WEB-INF/server-resources/firebase-adminsdk.json</values.firebasefilepath>
 				<!-- DB設定 -->
 				<spring.datasource.driver-class-name>com.mysql.jdbc.Driver</spring.datasource.driver-class-name>
-				<spring.datasource.url>jdbc:mysql://localhost:56492/TEST?characterEncoding=UTF-8&amp;serverTimezone=JST</spring.datasource.url>
-				<spring.datasource.username>adminUser</spring.datasource.username>
-				<spring.datasource.password>Tomyan_76</spring.datasource.password>
+				<spring.datasource.url>jdbc:mysql://localhost:3306/TESTDB?characterEncoding=UTF-8&amp;serverTimezone=JST</spring.datasource.url>
+				<spring.datasource.username>username</spring.datasource.username>
+				<spring.datasource.password>password</spring.datasource.password>
 			</properties>
 		</profile>
 		<profile>
@@ -126,9 +126,9 @@
 				<values.firebasefilepath>./WEB-INF/server-resources/firebase-adminsdk.json</values.firebasefilepath>
 				<!-- DB設定 -->
 				<spring.datasource.driver-class-name>com.mysql.jdbc.GoogleDriver</spring.datasource.driver-class-name>
-				<spring.datasource.url>jdbc:google:mysql://mygcpproject-146511:us-west1:dev-mysql57/test1</spring.datasource.url>
-				<spring.datasource.username>root</spring.datasource.username>
-				<spring.datasource.password>nNIkiGD9hqjLEJPo</spring.datasource.password>
+				<spring.datasource.url>jdbc:google:mysql://projectname:region:instancename/dbname</spring.datasource.url>
+				<spring.datasource.username>username</spring.datasource.username>
+				<spring.datasource.password>password</spring.datasource.password>
 			</properties>
 		</profile>
 	</profiles>
