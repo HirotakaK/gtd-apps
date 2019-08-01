@@ -12,6 +12,7 @@ firebase.auth().onAuthStateChanged( (user) => {
 		console.log(user);
 		console.table(user);
 		// 自分のuidのタスク取得
+		// アクセストークンをClient側で保持せずに都度リフレッシュを強制させる
 		firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(getTasks);
 	}
 })
@@ -34,6 +35,7 @@ var getTasks = function(idToken) {
 	})
 	.done((data) => {
 		//成功した場合の処理
+		console.log('done');
 		console.log(data);
 	})
 	.fail(function(jqXHR, textStatus, errorThrown) {
@@ -43,6 +45,7 @@ var getTasks = function(idToken) {
 	})
 	.always((data) => {
 		//成功・失敗どちらでも行う処理
+		console.log('always');
 		console.log(data);
 	});
 };
